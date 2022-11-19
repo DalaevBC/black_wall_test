@@ -1,0 +1,92 @@
+version: '3'
+
+services:
+  # Build the app services
+  app1:
+    image: server
+    environment:
+      - APP=app1
+    ports:
+      - "9001:5000"
+    build:
+      context: "."
+      dockerfile: "./app/Dockerfile"
+    networks:
+      proxynet: # this network
+        ipv4_address: 179.12.0.9
+      
+  app2:
+    image: server
+    environment:
+      - APP=app2
+    ports:
+      - "9002:5000"
+    build:
+      context: "."
+      dockerfile: "./app/Dockerfile"
+    networks:
+      proxynet: # this network
+        ipv4_address: 179.12.0.8
+      
+  app3:
+    image: server
+    environment:
+      - APP=app3
+    ports:
+      - "9003:5000"
+    build:
+      context: "."
+      dockerfile: "./app/Dockerfile"
+    networks:
+      proxynet: # this network
+        ipv4_address: 179.12.0.7
+      
+  app4:
+    image: server
+    environment:
+      - APP=app4
+    ports:
+      - "9004:5000"
+    build:
+      context: "."
+      dockerfile: "./app/Dockerfile"
+    networks:
+      proxynet: # this network
+        ipv4_address: 179.12.0.6
+      
+  app5:
+    image: server
+    environment:
+      - APP=app5
+    ports:
+      - "9005:5000"
+    build:
+      context: "."
+      dockerfile: "./app/Dockerfile"
+    networks:
+      proxynet: # this network
+        ipv4_address: 179.12.0.5
+
+  balancer:
+    environment:
+      - APP=BALANCER
+    ports:
+      - "9010:5000"
+    build:
+      context: "./api_stuff/"
+      dockerfile: "./Dockerfile"
+    networks:
+      proxynet: # this network
+        ipv4_address: 179.12.0.13
+
+      
+
+networks:
+  proxynet:
+    ipam:
+      config:
+        - subnet: 179.12.0.0/24
+
+
+
+
